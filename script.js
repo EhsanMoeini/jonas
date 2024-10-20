@@ -1,43 +1,32 @@
 'use strict';
 
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
-let score = 20;
-let highScore = 0;
+let card_1 = document.querySelector(".window-1-a");
+let card_2 = document.querySelector(".window-2-a");
+let btn_1 = document.querySelector(".window-1-b");
+let txt_1 = document.querySelector(".window-1-p");
+let btn_2 = document.querySelector(".window-2-b");
+let input_2 = document.querySelector(".window-2-i");
+let eror = document.querySelector(".eror");
 
-document.querySelector(`.check`).addEventListener(`click`, function () {
-  const guess = +document.querySelector(`.guess`).value;
-
-  if (!guess) {
-    document.querySelector(`.message`).textContent = `⛔ No Number!`;
-  } else if (guess === secretNumber) {
-    document.querySelector(`.number`).textContent = secretNumber;
-    document.querySelector(`.message`).textContent = `🎉 Correct Number!`;
-    document.querySelector(`body`).style.backgroundColor = `#60b347`;
-    document.querySelector(`.number`).style.width = `30rem`;
-    if (highScore < score) {
-      highScore = score;
-      document.querySelector(`.highscore`).textContent = highScore;
-    }
-  } else if (guess !== secretNumber) {
-    if (score > 1) {
-      document.querySelector(`.message`).textContent =
-        guess > secretNumber ? `📈 Too high!` : `📉 Too low!`;
-      score--;
-      document.querySelector(`.score`).textContent = score;
-    } else {
-      document.querySelector(`.message`).textContent = `💥 You lost the game!`;
-      document.querySelector(`.score`).textContent = 0;
-    }
+btn_1.addEventListener("click", function () {
+  card_1.style.display = "none";
+  card_2.style.display = "flex";
+});
+btn_2.addEventListener("click", function () {
+  let numbers = input_2.value;
+  if (numbers === "") {
+    eror.style.display = "inline";
+    setTimeout(function () {
+      eror.style.display = "none";
+    }, 1500);
+  } else {
+    let arrNum = numbers.split("").reduce(function (acc, i) {
+      return (acc += +i);
+    }, 0);
+    card_1.style.display = "flex";
+    card_2.style.display = "none";
+    txt_1.textContent = arrNum;
+    btn_1.textContent = "again";
   }
 });
 
-document.querySelector(`.again`).addEventListener(`click`, function () {
-  score = 20;
-  secretNumber = Math.trunc(Math.random() * 20) + 1;
-  document.querySelector(`.message`).textContent = `Start guessing...`;
-  document.querySelector(`.score`).textContent = score;
-  document.querySelector(`body`).style.backgroundColor = `#222`;
-  document.querySelector(`.number`).style.width = `15rem`;
-  document.querySelector(`.guess`).value = ``;
-  document.querySelector(`.number`).textContent = `?`;
-});
