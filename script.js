@@ -27,6 +27,7 @@ btn_2.addEventListener("click", function () {
     card_2.style.display = "none";
     txt_1.textContent = arrNum;
     btn_1.textContent = "again";
+    input_2.value = "";
   }
 });
 
